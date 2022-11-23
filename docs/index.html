@@ -1,14 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/style.css" />
     <script src="./src/index.js" defer></script>
     <title>Document</title>
-</head>
-<body>
-    <p id = "joke"></p>
-    <button onclick="getJoke()">Next Joke</button>
-</body>
+  </head>
+  <body>
+    <section class="dark">
+      <div class="container py-4">
+        <h1 class="h1 text-center">Father Jokes</h1>
+        <article class="postcard">
+          <div class="postcard-text">
+            <div class="joke-box">
+              <div class="postcard-joke">
+                <h1 id="joke" ></h1>
+              </div>
+            </div>
+            
+            <div class="d-flex justify-content-center my-3">
+              <div class="d-flex align-content-center flex-wrap me-5">How funny is this joke?</div>
+              <button class="btn btn-danger mx-3 rounded-circle" onclick="evaluateJoke(1)">1</button>
+              <button class="btn btn-warning mx-3 rounded-circle" onclick="evaluateJoke(2)">2</button>
+              <button class="btn btn-success mx-3 rounded-circle" onclick="evaluateJoke(3)">3</button>
+            </div>
+            <button class="btn btn-primary" onclick="getJoke()">
+              Next Joke
+            </button>
+          </div>
+        </article>
+      </div>
+    </section>
+  </body>
 </html>
