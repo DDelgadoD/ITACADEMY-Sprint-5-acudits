@@ -1,38 +1,69 @@
 "use strict";
-const urlJoke = 'https://icanhazdadjoke.com/';
-const dataJoke = {
+const urlFather = 'https://icanhazdadjoke.com/';
+const dataFather = {
     method: 'GET',
     headers: {
         // eslint-disable-next-line prettier/prettier
-        'Accept': 'application/json',
+        Accept: 'application/json',
     },
 };
+const urlChuck = 'https://api.chucknorris.io/jokes/random';
+const dataChuck = {
+    method: 'GET',
+};
+let allowVoting = false;
 const reportAcudits = [];
-async function fetching(url, data = {}) {
+const fetching = async (url, data = {}) => {
     return await fetch(url, data)
         .then(response => response.json())
         .then(data => data);
-}
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-async function getJoke() {
-    const joke = await fetching(urlJoke, dataJoke);
+};
+const getFather = async () => {
+    const joke = await fetching(urlFather, dataFather);
     const jokeDiv = document.getElementById('joke');
     jokeDiv.innerHTML = joke.joke;
-}
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function evaluateJoke(score) {
+};
+const getChuck = async () => {
+    const joke = await fetching(urlChuck, dataChuck);
     const jokeDiv = document.getElementById('joke');
-    if (jokeDiv.innerHTML === '') {
-        console.log('No Joke');
+    jokeDiv.innerHTML = joke.value;
+};
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const getJoke = () => {
+    permitReevaluation('');
+    const seed = Math.round(Math.random());
+    seed ? getFather() : getChuck();
+    if (allowVoting === false) {
+        allowVoting = true;
+        const vote = document.getElementById('voting');
+        vote.classList.remove('d-none');
     }
-    else {
+};
+const permitReevaluation = (date) => {
+    const votingButton = Array.from(document.querySelectorAll('#voting .btn'));
+    votingButton.map(e => date === ''
+        ? (e.onclick = () => evaluateJoke(e.innerHTML))
+        : (e.onclick = () => evaluateJoke(e.innerHTML, date)));
+};
+const evaluateJoke = (points, date = '') => {
+    console.log(points);
+    if (date === '') {
+        const jokeDiv = document.getElementById('joke');
         const sc = {
             joke: jokeDiv.innerHTML,
-            score: score,
+            score: points,
             date: new Date().toISOString(),
         };
+        permitReevaluation(sc.date);
         reportAcudits.push(sc);
-        console.log(reportAcudits);
     }
-}
+    else {
+        reportAcudits.filter(s => {
+            if (s.date === date)
+                s.score = points;
+            console.log('Changed ' + s.score);
+        });
+    }
+    console.log(reportAcudits);
+};
 //# sourceMappingURL=index.js.map
