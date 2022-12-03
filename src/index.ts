@@ -1,24 +1,3 @@
-type JokeFather = {
-  id: string;
-  joke: string;
-  status: Number;
-};
-
-type JokeChuck = {
-  icon_url: string;
-  id: string;
-  url: string;
-  value: string;
-};
-
-type Score = {
-  joke: string;
-  score: string;
-  date: string;
-};
-
-type Scores = Array<Score>;
-
 const urlFather = 'https://icanhazdadjoke.com/';
 const dataFather = {
   method: 'GET',
@@ -30,6 +9,12 @@ const dataFather = {
 
 const urlChuck = 'https://api.chucknorris.io/jokes/random';
 const dataChuck = {
+  method: 'GET',
+};
+
+const urlWeather =
+  'https://api.openweathermap.org/data/2.5/weather?lat=41.390205&lon=2.154007&appid=e1cfeb1205be92eb55ed83ac48a3a40c&units=metric';
+const dataWeather = {
   method: 'GET',
 };
 
@@ -56,6 +41,18 @@ const getChuck = async (): Promise<void> => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
+const getWeather = async (): Promise<void> => {
+  const weather: Weather = await fetching(urlWeather, dataWeather);
+  console.log(weather);
+  const weatherDiv = <HTMLDivElement>document.getElementById('weather');
+  const weatherIconDiv = <HTMLDivElement>(
+    document.getElementById('weather-icon')
+  );
+  weatherDiv.innerHTML = `${weather.main.temp} ºC`;
+  weatherIconDiv.innerHTML = `<img src ="http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png" alt="Sol y nubes" />`;
+};
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const getJoke = (): void => {
   permitReevaluation('');
   const seed: number = Math.round(Math.random());
@@ -79,7 +76,6 @@ const permitReevaluation = (date: string) => {
 };
 
 const evaluateJoke = (points: string, date = ''): void => {
-  console.log(points);
   if (date === '') {
     const jokeDiv = <HTMLDivElement>document.getElementById('joke');
     const sc: Score = {
@@ -92,8 +88,50 @@ const evaluateJoke = (points: string, date = ''): void => {
   } else {
     reportAcudits.filter(s => {
       if (s.date === date) s.score = points;
-      console.log('Changed ' + s.score);
+      console.log(`Changed: new score is ${s.score}`);
     });
   }
   console.log(reportAcudits);
+};
+
+window.addEventListener('load', async () => {
+  console.log('load');
+  await getWeather();
+});
+
+// TYPES DEFINITIONS
+
+type JokeFather = {
+  id: string;
+  joke: string;
+  status: Number;
+};
+
+type JokeChuck = {
+  icon_url: string;
+  id: string;
+  url: string;
+  value: string;
+};
+
+type Score = {
+  joke: string;
+  score: string;
+  date: string;
+};
+
+type Scores = Array<Score>;
+
+// Only the needed fields are modelated
+type Weather = {
+  weather: WeatherEntity[];
+  main: Main;
+};
+
+type WeatherEntity = {
+  icon: string;
+};
+
+type Main = {
+  temp: number;
 };
