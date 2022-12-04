@@ -9,35 +9,34 @@
     <title>Daily Joker</title>
   </head>
   <body>
-    <section class="weather">
-      <div id="weather"></div>
-      <div id="weather-icon"></div>
+    <section class="d-flex align-content-center">
+      <div id="weather" class="align-self-center pe-2 ms-3"></div>
+      <div id="weather-icon" class="align-self-center ps-2"></div>
     </section>
-    <section class="dark">
-      <div class="container py-4">
-        <h1 class="h1 text-center">Daily Joker</h1>
-        <article class="postcard">
-          <div class="postcard-text">
-            <div class="joke-box">
-              <div class="postcard-joke">
-                <h1 id="joke"></h1>
-              </div>
-            </div>
+    <section class="container d-flex justify-content-center">
+      <div class="mini-blob align-self-end d-none d-lg-block"></div>
 
-            <div id="voting" class="d-flex justify-content-center my-3 d-none">
-              <div class="d-flex align-content-center flex-wrap me-5">
-                How funny is this joke?
-              </div>
-              <button class="btn btn-danger m-3 mb-0 rounded-circle">1</button>
-              <button class="btn btn-warning m-3 mb-0 rounded-circle">2</button>
-              <button class="btn btn-success m-3 mb-0 rounded-circle">3</button>
-            </div>
-            <button id="get-joke" class="btn btn-primary mt-3" onclick="getJoke()">
-              Next Joke
-            </button>
+      <div class="container d-flex justify-content-center blob">
+        <div
+          class="inside-blob d-flex align-content-center justify-content-center flex-column"
+        >
+          <h1 class="text-center mb-5">Daily Joker</h1>
+
+          <p id="joke" class="text-center mb-5"></p>
+
+          <div id="voting" class="d-flex justify-content-center my-3 d-none">
+            <button class="btn btn-danger m-3 mb-0 rounded-circle">1</button>
+            <button class="btn btn-warning m-3 mb-0 rounded-circle">2</button>
+            <button class="btn btn-success m-3 mb-0 rounded-circle">3</button>
           </div>
-        </article>
+
+          <button id="get-joke" class="btn btn-primary align-self-center mt-3">
+            Next Joke
+          </button>
+        </div>
       </div>
+
+      <div class="mini-blob2 d-none d-lg-block"></div>
     </section>
   </body>
 </html>

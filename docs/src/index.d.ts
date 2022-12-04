@@ -22,6 +22,7 @@ declare const getWeather: () => Promise<void>;
 declare const getJoke: () => void;
 declare const permitReevaluation: (date: string) => void;
 declare const evaluateJoke: (points: string, date?: string) => void;
+declare const configureBlobs: () => void;
 type JokeFather = {
     id: string;
     joke: string;
