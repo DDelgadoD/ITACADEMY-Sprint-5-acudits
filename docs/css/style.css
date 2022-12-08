@@ -10,8 +10,9 @@ body {
 }
 
 .blob {
-  max-width: 650px;
+  max-width: 700px;
   aspect-ratio: 1;
+  min-width:500px;
   padding: 10% 5%;
   background-color: red;
   -webkit-mask-image: url(../img/blob1.svg);
@@ -21,12 +22,16 @@ body {
 }
 
 .inside-blob {
-  max-width: 60%;
+  color: white;
+  font-weight: bold;
+  max-width: 400px;
+  max-height:400px;
 }
 
 .mini-blob {
-  width: 200px;
-  height: 200px;
+  width: 100px;
+  height: 100px;
+  margin-bottom: 100px;
   background-color: red;
   -webkit-mask-image: url(../img/blob1.svg);
   -webkit-mask-size: cover;
@@ -35,8 +40,9 @@ body {
 }
 
 .mini-blob2 {
-  width: 200px;
-  height: 200px;
+  margin-top: -20px;
+  width: 100px;
+  height: 100px;
   background-color: red;
   -webkit-mask-image: url(../img/blob1.svg);
   -webkit-mask-size: cover;
@@ -45,10 +51,17 @@ body {
 }
 
 #weather {
-  border-right: solid 3px black;
+  border-left: solid 3px black;
 }
 
 #get-joke {
-  width: 200px;
+  width: 150px;
+  background-color: #EDC951;
+  border-radius: 20px;
+  border-color: black;
+  border-style: solid;
 }
 
+#voting img {
+  width: 40px;
+}

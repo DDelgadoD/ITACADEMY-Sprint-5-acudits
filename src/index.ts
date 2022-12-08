@@ -1,3 +1,4 @@
+// configuration of APIs
 const urlFather = 'https://icanhazdadjoke.com/';
 const dataFather = {
   method: 'GET',
@@ -18,16 +19,18 @@ const dataWeather = {
   method: 'GET',
 };
 
+// global values
 let allowVoting = false;
-
 const reportAcudits: Scores = [];
 
+// Helpers
 const fetching = async <T>(url: string, data: RequestInit = {}): Promise<T> => {
   return await fetch(url, data)
     .then(response => response.json())
     .then(data => data as T);
 };
 
+// Fetchers Jokes
 const getFather = async (): Promise<void> => {
   const joke: JokeFather = await fetching(urlFather, dataFather);
   const jokeDiv = <HTMLDivElement>document.getElementById('joke');
@@ -38,18 +41,6 @@ const getChuck = async (): Promise<void> => {
   const joke: JokeChuck = await fetching(urlChuck, dataChuck);
   const jokeDiv = <HTMLDivElement>document.getElementById('joke');
   jokeDiv.innerHTML = joke.value;
-};
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const getWeather = async (): Promise<void> => {
-  const weather: Weather = await fetching(urlWeather, dataWeather);
-  console.log(weather);
-  const weatherDiv = <HTMLDivElement>document.getElementById('weather');
-  const weatherIconDiv = <HTMLDivElement>(
-    document.getElementById('weather-icon')
-  );
-  weatherDiv.innerHTML = `${weather.main.temp} ºC`;
-  weatherIconDiv.innerHTML = `<img src="http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png" width="50px" alt="Sol y nubes" />`;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -65,15 +56,29 @@ const getJoke = (): void => {
   }
 };
 
+// fetchers of weather
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const getWeather = async (): Promise<void> => {
+  const weather: Weather = await fetching(urlWeather, dataWeather);
+  console.log(weather);
+  const weatherDiv = <HTMLDivElement>document.getElementById('weather');
+  const weatherIconDiv = <HTMLDivElement>(
+    document.getElementById('weather-icon')
+  );
+  weatherDiv.innerHTML = `${weather.main.temp} ºC`;
+  weatherIconDiv.innerHTML = `<img src="http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png" width="50px" alt="Sol y nubes" />`;
+};
+
+// evaluation related functions
 const permitReevaluation = (date: string) => {
   const votingButton: Array<HTMLElement> = Array.from(
-    document.querySelectorAll('#voting .btn')
+    document.querySelectorAll('#voting img')
   );
-  votingButton.map(e =>
+  votingButton.map((e, index) => {
     date === ''
-      ? (e.onclick = () => evaluateJoke(e.innerHTML))
-      : (e.onclick = () => evaluateJoke(e.innerHTML, date))
-  );
+      ? (e.onclick = () => evaluateJoke(String(index + 1)))
+      : (e.onclick = () => evaluateJoke(String(index + 1), date));
+  });
 };
 
 const evaluateJoke = (points: string, date = ''): void => {
@@ -95,6 +100,7 @@ const evaluateJoke = (points: string, date = ''): void => {
   console.log(reportAcudits);
 };
 
+// blob changes realted functions
 const configureBlobs = () => {
   const color: string = Math.floor(Math.random() * 16777215).toString(16);
   const arr: Array<string> = ['.blob', '.mini-blob', '.mini-blob2'];
@@ -107,6 +113,7 @@ const configureBlobs = () => {
   });
 };
 
+// Onload function
 window.addEventListener('load', async () => {
   console.log('load');
   await getWeather();

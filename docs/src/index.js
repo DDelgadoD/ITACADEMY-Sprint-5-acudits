@@ -54,10 +54,12 @@ const getJoke = () => {
     }
 };
 const permitReevaluation = (date) => {
-    const votingButton = Array.from(document.querySelectorAll('#voting .btn'));
-    votingButton.map(e => date === ''
-        ? (e.onclick = () => evaluateJoke(e.innerHTML))
-        : (e.onclick = () => evaluateJoke(e.innerHTML, date)));
+    const votingButton = Array.from(document.querySelectorAll('#voting img'));
+    votingButton.map((e, index) => {
+        date === ''
+            ? (e.onclick = () => evaluateJoke(String(index + 1)))
+            : (e.onclick = () => evaluateJoke(String(index + 1), date));
+    });
 };
 const evaluateJoke = (points, date = '') => {
     if (date === '') {
@@ -84,7 +86,6 @@ const configureBlobs = () => {
     const arr = ['.blob', '.mini-blob', '.mini-blob2'];
     arr.map(val => {
         const a = `url(./img/blob${Math.round(Math.random() * 10)}.svg)`;
-        console.log(val, '=', a);
         const div = document.querySelector(val);
         div.style.maskImage = a;
         div.style.webkitMaskImage = a;
